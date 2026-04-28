@@ -716,7 +716,7 @@ export function WorldViewer({ initialSplatUrl }: WorldViewerProps) {
       const viewer = viewerRef.current;
       if (!viewer?.camera) return;
 
-      const MOVE_SPEED = 0.05; // m per frame at ~60 fps
+      const MOVE_SPEED = 0.18; // m per frame at ~60 fps — ~10 m/s walking pace
       const cam = viewer.camera as THREE.PerspectiveCamera;
 
       // Forward: camera look direction projected onto horizontal (Y=const) plane.

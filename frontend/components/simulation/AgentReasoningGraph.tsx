@@ -350,18 +350,23 @@ function buildStylesheet(tokens: Tokens): StylesheetCSS[] {
 const FCOSE_LAYOUT: LayoutOptions = {
   name: "fcose",
   // @ts-expect-error fcose layout options are not in the cytoscape type defs
-  randomize: false,
+  // Random initial positions let the force-directed layout actually spread
+  // nodes out. With randomize:false everything stacks on top and the layout
+  // collapses into a diagonal line.
+  randomize: true,
   animate: "end",
   animationDuration: 600,
-  fit: false,
+  // Auto-fit the laid-out graph to the viewport so users see the whole
+  // network instead of one bunched-up corner.
+  fit: true,
   nodeRepulsion: 8000,
   idealEdgeLength: 110,
   edgeElasticity: 0.25,
   gravity: 0.18,
-  padding: 30,
+  padding: 40,
   packComponents: true,
   nodeSeparation: 90,
-  numIter: 1500
+  numIter: 2500
 };
 
 function GraphInner() {

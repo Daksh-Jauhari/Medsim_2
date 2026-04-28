@@ -2,6 +2,7 @@ import type { Route } from "next";
 import Link from "next/link";
 
 import { BackLink } from "@/components/ui/BackLink";
+import { SupplementalUpload } from "@/components/facility/SupplementalUpload";
 import { api } from "@/lib/api";
 import type { WorldModel } from "@/types";
 
@@ -73,6 +74,8 @@ export default async function FacilityDetailPage({ params }: { params: Promise<{
           Live safety analysis, 3D world model inspection, scenario simulation, and compliance reports.
         </p>
       </div>
+      <div style={{ height: 20 }} />
+      <SupplementalUpload facilityId={id} />
       <div style={{ height: 20 }} />
       <div className="card-grid">
         {data.units.map((unit) => {

@@ -98,19 +98,26 @@ async def patch_upload(
         file_name = metadata.get("filename", f"{upload_id}.jpg")
         facility_id = session["facility_id"]
         key = _image_key(facility_id, "supplemental_upload", file_name)
-        r2_client.upload_bytes(key, buffer, content_type=session["content_type"])
+        if r2_client.enabled:
+            r2_client.upload_bytes(key, buffer, content_type=session["content_type"])
+            public_url = r2_client.public_url_for(key)
+        else:
+            # R2 not configured — keep the upload metadata in IRIS but skip cloud persistence
+            public_url = ""
         image_meta = iris_client.write_image_meta(
             ImageMeta(
                 image_id=f"img_{uuid4().hex[:8]}",
                 facility_id=facility_id,
                 source="supplemental_upload",
                 r2_key=key,
-                public_url=r2_client.public_url_for(key),
+                public_url=public_url,
                 content_type=session["content_type"],
                 created_at=datetime.now(tz=UTC),
             )
         )
-        classification = await classify_image(buffer, "supplemental_upload")
+        classification = await classify_image(
+            buffer, "supplemental_upload", {"content_type": session["content_type"]}
+        )
         iris_client.update_image_classification(
             image_meta.image_id,
             category=classification["category"],

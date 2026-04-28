@@ -45,7 +45,7 @@ def _fetch_url_bytes(url: str) -> bytes | None:
 
 def _get_facility_images(unit_id: str) -> list[tuple[str, str]]:
     """
-    Return (caption, public_url) pairs for fal.ai-generated facility images.
+    Return (caption, public_url) pairs for facility images.
     Reads from the iris_client image store for the facility that owns this unit.
     """
     try:
@@ -56,11 +56,13 @@ def _get_facility_images(unit_id: str) -> list[tuple[str, str]]:
         if not unit:
             return []
         images = iris_client.list_images_for_facility(unit.facility_id)
-        results = []
+        results: list[tuple[str, str]] = []
         for img in images:
-            if img.public_url:
-                caption = img.description or img.area_id or "Facility Image"
-                results.append((caption, img.public_url))
+            if not img.public_url:
+                continue
+            # ImageMeta fields are: source, category, notes (no description/area_id)
+            caption = (img.notes or img.category or img.source or "Facility Image").replace("_", " ").title()
+            results.append((caption, img.public_url))
         return results
     except Exception:
         return []

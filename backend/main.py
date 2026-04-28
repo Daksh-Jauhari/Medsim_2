@@ -29,6 +29,15 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=[
+        "Location",
+        "Upload-Offset",
+        "Upload-Length",
+        "Tus-Resumable",
+        "Tus-Version",
+        "Tus-Extension",
+        "Tus-Max-Size",
+    ],
 )
 
 app.include_router(facilities_router)

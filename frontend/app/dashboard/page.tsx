@@ -24,11 +24,18 @@ export default async function DashboardPage() {
       <main className="shell">
         <BackLink href="/" label="Hub" />
         <div className="panel">
-          <div className="eyebrow">Dashboard</div>
-          <h1 className="page-title">Facility intelligence network</h1>
-          <p className="muted">
-            Select a facility to view its world model, coverage, findings, and reports.
-          </p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+            <div>
+              <div className="eyebrow">Dashboard</div>
+              <h1 className="page-title">Facility intelligence network</h1>
+              <p className="muted">
+                Select a facility to view its world model, coverage, findings, and reports.
+              </p>
+            </div>
+            <Link className="button" href={"/facility/new" as Route}>
+              + New Facility
+            </Link>
+          </div>
           <div className="card-grid" style={{ marginTop: 24 }}>
             {facilities.map((f) => (
               <FacilityCard key={f.facility_id} facility={f} />
@@ -36,7 +43,7 @@ export default async function DashboardPage() {
           </div>
           {facilities.length === 0 && (
             <p className="muted" style={{ marginTop: 16 }}>
-              No facilities yet — add one from the onboarding form.
+              No facilities yet — click <strong>+ New Facility</strong> above to create one.
             </p>
           )}
         </div>

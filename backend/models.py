@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 Domain = Literal["ICA", "MSA", "FRA", "ERA", "PFA", "SCA"]
 PatientSex = Literal["male", "female", "unknown"]
 Severity = Literal["CRITICAL", "HIGH", "ADVISORY"]
-ModelStatus = Literal["queued", "acquiring", "classifying", "generating", "ready", "failed"]
+ModelStatus = Literal["queued", "acquiring", "classifying", "augmenting", "generating", "ready", "failed"]
 ScanStatus = Literal["queued", "running", "synthesizing", "complete", "failed"]
 ImageSource = Literal["street_view", "places", "supplemental_upload", "world_labs", "vr_video"]
 

@@ -24,6 +24,16 @@ export function FacilityOnboardingForm() {
           unit_type: "Trauma",
           floor: 1
         });
+        // Kick off the imagery + world-model pipeline. This is a background
+        // task on the backend, so the request returns immediately and the
+        // model status starts as "queued" / "pending".
+        try {
+          await api.triggerAcquisition(facility.facility_id);
+        } catch (acquireError) {
+          // Don't block navigation on acquisition errors — the facility
+          // record was created successfully. Surface it as a warning instead.
+          console.warn("Acquisition trigger failed", acquireError);
+        }
         router.push(`/facility/${facility.facility_id}`);
       } catch (submitError) {
         setError(submitError instanceof Error ? submitError.message : "Unable to create facility");

@@ -10,6 +10,7 @@ redis==5.2.1
 pytest==8.3.5
 fal-client==0.13.2
 openai>=2.0.0
+anthropic>=0.40.0
 yt-dlp>=2025.1.15
 py360convert>=1.0.3
 numpy>=1.26

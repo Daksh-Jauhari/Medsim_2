@@ -19,7 +19,14 @@ async def websocket_scan_live(websocket: WebSocket, unit_id: str):
         while True:
             payload = await asyncio.wait_for(queue.get(), timeout=30)
             await websocket.send_json(payload)
-    except (asyncio.TimeoutError, WebSocketDisconnect):
+    except (asyncio.TimeoutError, WebSocketDisconnect, asyncio.CancelledError):
+        # Idle timeout (no live findings) or client disconnect — both are normal.
+        pass
+    finally:
         redis_client.unsubscribe(channel, queue)
-        await websocket.close()
+        # Closing an already-closed socket throws; swallow it.
+        try:
+            await websocket.close()
+        except Exception:
+            pass
 

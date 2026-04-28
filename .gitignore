@@ -2,11 +2,14 @@
 node_modules
 .venv
 .env
+.env.local
+frontend/.env.local
 __pycache__
 .pytest_cache
 dist
 coverage
 *.pyc
+*.tsbuildinfo
 .DS_Store
 frontend/.next
 frontend/node_modules

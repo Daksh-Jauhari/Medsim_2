@@ -487,6 +487,7 @@ class MemoryIRISClient:
         status: str | None = None,
         splat_r2_key: str | None = None,
         scene_graph_json: dict | None = None,
+        spatial_bundle_json: dict | None = None,
         world_labs_world_id: str | None = None,
         source_image_count: int | None = None,
         failure_reason: str | None = None,
@@ -503,6 +504,8 @@ class MemoryIRISClient:
             updates["splat_r2_key"] = splat_r2_key
         if scene_graph_json is not None:
             updates["scene_graph_json"] = scene_graph_json
+        if spatial_bundle_json is not None:
+            updates["spatial_bundle_json"] = spatial_bundle_json
         if world_labs_world_id is not None:
             updates["world_labs_world_id"] = world_labs_world_id
         if source_image_count is not None:
